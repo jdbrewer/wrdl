@@ -1,0 +1,112 @@
+---
+description: 
+globs: *.tsx,*.ts,*.jsx,*.js,*.md,*.json
+alwaysApply: false
+---
+# Task List Management
+
+Guidelines for creating and managing task lists in markdown files to track project progress
+
+## Task List Creation
+
+1. Create task lists in a markdown file (in a `tasks` directory found at the project root):
+  - Use a descriptive name relevant to the feature (e.g., `ASSISTANT_CHAT.md`)
+  - Include a clear title and description of the feature being implemented
+
+2. Structure the file with these sections:
+  ```markdown
+  # Feature Name Implememtation
+
+  Brief description of the feature and its purpose.
+
+  ## Completed Tasks
+
+  - [x] Task 1 that has been completed
+  - [x] Task 2 that has been completed
+
+  ## In Progress Tasks
+
+  - [ ] Task 3 currently being worked on
+  - [ ] Task 4 to be completed soon
+
+  ### Future Tasks
+
+  - [ ] Task 5 planned for future implementation
+  - [ ] Task 6 planned for future implementation
+
+  ## Implementation Plan
+
+  1. Update the task list as you progress:
+    - Mark tasks as completed by changing `[ ]` to `[x]`
+    - Add new tasks as they are identified
+    - Move tasks between sections as appropriate
+
+  2. Keep "Relevant Files" section updated with:
+    - File paths that have been created or modified
+    - Brief descriptions of each file's purpose
+    - Status indicators (e.g., ✅) for completed components
+
+  3. Add implementation details:
+    - This application is a SPA using Vite and React for the front end within a pnpm workspace (monorepo). When state sharing/drilling is needed, prefer React Context.
+    - Use React Query and the fetch api for data fetching and caching. Encapsulate all business logic into hooks that will act as Aggregate Roots
+    - Pusher is used to enable live data updating, and should be listened to as locally as possible to allow for a tailored and easily maintainable situation
+    - API keys and other secrets/semi-secret constants should be kept in the .env files in the project root and follow the Vite documentation around accessing them as securely as possible within the application layer.
+    - New tasks should be included when generating new features for writing BDD-style acceptance tests as documented in the `testing.mdc` file.
+    - Tasks should be created to update existing BDD tests when another task materially modifies any existing features that have BDD-style acceptance tests 
+
+  ## Relevant Files
+
+  List files created or modified for this feature following these examples:
+
+  - `src/components/FeatureComponent.jsx`: Description of the component's purpose. [Status: ✅ Done / 🚧 In Progress / 💡 Planned]
+  - `src/services/featureApi.js`: API interaction logic. [Status: 🚧 In Progress]
+
+
+  ## AI Instructions
+
+  Features of non-trivial size should all use task lists. The first task in every task list should be to create the rest of the tasks in the task list
+  When working with task lists, the AI should:
+
+  1. Regularly update the task list file after implementing significant components
+  2. Mark completed tasks with [x] when finished
+  3. Add new tasks discovered during implementation
+  4. Maintain the "Relevant Files" section with accurate file paths and descriptions
+  5. Document implementation details, especially for complex features
+  6. When implementing tasks one by one, first check which task to implement next
+  7. After implementing a task, update the file to reflect the progress
+
+  ## Example Task Update
+
+  Here's how to update the list when a task moves from "In Progress" to "Completed":
+
+  **Before:**
+
+  ```markdown
+  ## Task Status
+
+  ### In Progress
+
+  - [ ] Implement user authentication flow
+  - [ ] Design database schema
+
+  ### Completed
+
+  - [x] Setup project structure
+  ```
+
+  **After completing "Implement user authentication flow":**
+
+  ```markdown
+  ## Task Status
+
+  ### In Progress
+
+  - [ ] Design database schema <-- Now the next task
+
+  ### Completed
+
+  - [x] Setup project structure
+  - [x] Implement user authentication flow <-- Moved and marked as done
+  ```
+
+
