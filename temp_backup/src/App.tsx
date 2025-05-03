@@ -15,7 +15,7 @@ const App: React.FC = () => {
   return (
     <div className={styles.app}>
       <header className={styles.header}>
-        <h1>Wordle Clone</h1>
+        <h1>WRDL</h1>
       </header>
       <main className={styles.main}>
         <StatusMessages
