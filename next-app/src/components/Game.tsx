@@ -16,6 +16,9 @@ const Game: React.FC = () => {
         setShowConfetti(false);
       }, 5000); // Hide confetti after 5 seconds
       return () => clearTimeout(timer);
+    } else {
+      // Stop confetti immediately if game is no longer won
+      setShowConfetti(false);
     }
   }, [gameState.hasWon]);
 

@@ -291,7 +291,10 @@ const gameReducer = (state: GameState, action: GameAction): GameState => {
     }
     
     case 'START_NEW_GAME': {
-      return createEmptyInitialState();
+      return {
+        ...createEmptyInitialState(),
+        targetWord: '', // This will be set by the useEffect in GameProvider
+      };
     }
     
     default:
@@ -306,6 +309,7 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [isInvalidWord, setIsInvalidWord] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
+  // Initialize game with a random word
   useEffect(() => {
     const initializeGame = async () => {
       try {
@@ -313,7 +317,6 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
         dispatch({ type: 'INITIALIZE', payload: initialState });
       } catch (error) {
         console.error('Failed to initialize game:', error);
-        // Fallback to a default word if initialization fails
         dispatch({ 
           type: 'INITIALIZE', 
           payload: {
@@ -329,21 +332,53 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
     initializeGame();
   }, []);
 
+  // Handle starting a new game
+  useEffect(() => {
+    const startNewGame = async () => {
+      try {
+        const newWord = await dictionary.getRandomWord();
+        dispatch({
+          type: 'INITIALIZE',
+          payload: {
+            ...createEmptyInitialState(),
+            targetWord: newWord,
+          },
+        });
+      } catch (error) {
+        console.error('Failed to start new game:', error);
+        dispatch({
+          type: 'INITIALIZE',
+          payload: {
+            ...createEmptyInitialState(),
+            targetWord: 'APPLE', // Fallback word
+          },
+        });
+      }
+    };
+
+    if (state.targetWord === '') {
+      startNewGame();
+    }
+  }, [state.targetWord]);
+
   const handleKeyPress = useCallback(async (key: string) => {
-    if (state.isGameOver) return;
+    if (state.isGameOver) {
+      // If game is over and user presses ENTER, start a new game
+      if (key === 'ENTER') {
+        dispatch({ type: 'START_NEW_GAME' });
+        return;
+      }
+      // Ignore other keys when game is over
+      return;
+    }
     
     if (key === 'ENTER') {
       const currentGuess = state.board[state.currentRow]
         .map(tile => tile.letter)
         .join('');
       
-      console.log('Current guess:', currentGuess);
-      console.log('Target word:', state.targetWord);
-      
       if (state.currentTile === 5) {
         const isValid = await dictionary.isValidWord(currentGuess);
-        console.log('Is valid word:', isValid);
-        
         if (!isValid) {
           setIsInvalidWord(true);
           setTimeout(() => setIsInvalidWord(false), 500);
