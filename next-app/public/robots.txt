@@ -1,0 +1,6 @@
+# Allow all crawlers
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://wrdl-clone-r7wb.vercel.app/sitemap.xml 
