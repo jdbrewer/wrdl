@@ -1,9 +1,12 @@
 {
-  "name": "next-app",
-  "version": "0.1.0",
+  "name": "wrdl",
+  "version": "1.0.0",
   "private": true,
+  "description": "A Wordle clone built with Next.js",
+  "author": "jdbrewer",
+  "license": "MIT",
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -24,5 +27,19 @@
     "eslint": "^9",
     "eslint-config-next": "15.3.1",
     "typescript": "^5"
-  }
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jdbrewer/wrdl.git"
+  },
+  "keywords": [
+    "wordle",
+    "game",
+    "nextjs",
+    "react",
+    "typescript"
+  ]
 }
