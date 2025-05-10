@@ -5,7 +5,6 @@ import { StatusMessage as StatusMessageType } from '@/types/game';
 
 interface StatusMessagesProps {
   messages: StatusMessageType[];
-  onDismiss: (id: number) => void;
 }
 
 const getMessageColor = (type: StatusMessageType['type']) => {
@@ -19,7 +18,7 @@ const getMessageColor = (type: StatusMessageType['type']) => {
   }
 };
 
-export const StatusMessages: React.FC<StatusMessagesProps> = ({ messages, onDismiss }) => {
+export const StatusMessages: React.FC<StatusMessagesProps> = ({ messages }) => {
   if (messages.length === 0) return null;
 
   return (

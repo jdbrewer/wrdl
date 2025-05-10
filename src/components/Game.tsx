@@ -22,10 +22,6 @@ const Game: React.FC = () => {
     }
   }, [gameState.hasWon]);
 
-  const handleDismissMessage = (id: number) => {
-    // The message will be automatically removed by the cleanup effect in GameContext
-  };
-
   return (
     <div className="flex flex-col items-center w-full max-w-lg mx-auto">
       <Confetti 
@@ -48,7 +44,6 @@ const Game: React.FC = () => {
       <main className="flex flex-col items-center w-full gap-4">
         <StatusMessages
           messages={gameState.statusMessages}
-          onDismiss={handleDismissMessage}
         />
         <GameBoard 
           board={gameState.board} 
